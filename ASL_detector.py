@@ -1,8 +1,8 @@
 # In order to run this code:
-#  activate the virtual environment with venv\Script\activate
+#  activate the virtual environment with venv\Scripts\activate
 #  write python ASL_detector.py in the terminal 
 import numpy as np
-import os
+import os 
 import mediapipe as mp
 import cv2
 from matplotlib import pyplot as plt
@@ -70,7 +70,7 @@ def extract_keypoints(results):
                                                                                   
     return np.concatenate([pose, left_hand, right_hand])
 
-#-------------------------------------------------------- Create the empty model -------------------------------------------------------
+#----------------------------------------------- Preprocess data for the training ----------------------------------------------------- 
 label_map = {label:num for num, label in enumerate(actions)}
 sequences, labels = [], []
 for action in actions:
@@ -85,6 +85,7 @@ for action in actions:
 X = np.array(sequences)
 n_keypoints = X.shape[2]
 
+#-------------------------------------------------------- Create the empty model -------------------------------------------------------
 model = Sequential()        
 model.add(LSTM(64, return_sequences=True, activation='relu', input_shape=(sequence_length, n_keypoints)))
 # Syntax: model.add(LSTM(number of LSTM units, 
@@ -96,17 +97,17 @@ model.add(LSTM(64, return_sequences=False, activation='relu')) # In this case do
 model.add(Dense(64, activation='relu'))                        # 64 units of densely connected neural network neurons
 model.add(Dense(128, activation='relu'))
 model.add(Dense(actions.shape[0], activation='softmax')) 
-                
-res = []
-sequence = []                               # Collects out thirty frames in order to generate a prediction
-sentence = []                               # History of detections, so they can be concatenated
-predictions = []
-threshold = 0.87                             # Confidence (if the highest probability > 40%, assune it's right)
 
 # ------------------------------------------------------ Load model weights -----------------------------------------------------------
 model.load_weights('action.h5')
 
 #--------------------------------------------------------- ASL detection --------------------------------------------------------------
+res = []
+sequence = []                               # Collects out thirty frames in order to generate a prediction
+sentence = []                               # History of detections, so they can be concatenated
+predictions = []
+threshold = 0.8                             # Confidence (if the highest probability > 40%, assume it's right)
+
 cap = cv2.VideoCapture(0)                    
 with mp_holistic.Holistic(min_detection_confidence=0.5, min_tracking_confidence=0.5) as holistic: 
     while cap.isOpened():                         
