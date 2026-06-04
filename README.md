@@ -1,5 +1,5 @@
 Hello everyone and welcome to my this side of the internet :)
-This repository is an improved version based on the tutorial by Nicholas Rossetti (Sign Language Detection using ACTION RECOGNITION with Python | LSTM Deep Learning Model -
+This repository is an improved version based on the tutorial by Nicholas Renotte (Sign Language Detection using ACTION RECOGNITION with Python | LSTM Deep Learning Model -
 https://www.youtube.com/watch?v=doDUihpj6ro&t=1016s). 
 
 In addition to the code provided by the tutorial, I made the recognition algorithm more stable by using the wrist landmark as a reference point for landmark position, 
