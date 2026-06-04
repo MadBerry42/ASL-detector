@@ -7,8 +7,10 @@ thus making the position estimation accuracy less dependant on the distance from
 I found that the program was also a bit too confident and sometimes produced multiple outputs for the same gesture, so I added a few lines to increase confidence before 
 providing an answer: the answer has to be consistent for a few seconds before it can be considered valid.
 
-In this repository you will find two files, a python notebook (ASL_notebook.ipynb), which I recommend for training the net with your own data, and a Python script (ASL_detector.py),
-which takes in input the weights produced during training and saved as a .h5 file called action.h5 and will ise that to recognize your movements. 
+In this repository you will find multiple .py files which are expected to be run in order. The ASL_notebook.ipynb file contains all the sequences from beginning to the end. However, I recommend to go by single files for readibility and to save time.
 
-In the future I plan to improve the accuracy of the model by testing different types of machine learning approaches to find the most accurate combination and dive deeper into
+Future developments for improving user experience will include plotting the evaluation results having a real table for the confusion matrix and a graph depicting accuracy over time.
+
+In the long term future future I also plan to improve the accuracy of the model by testing different types of machine learning approaches to find the most accurate combination and dive deeper into
 the syntax of the american sign language in order to provide a more reliable tool to whoever may benefit from it!
+
