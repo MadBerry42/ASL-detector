@@ -1,11 +1,10 @@
 from sklearn.model_selection import train_test_split
 import tensorflow as tf
 import numpy as np
-import os
-from tensorflow.keras.models import Sequential       
-from tensorflow.keras.layers import LSTM, Dense      
-                                                     
-from tensorflow.keras.callbacks import TensorBoard    
+import os 
+from keras.models import Sequential       
+from keras.layers import LSTM, Dense                                               
+from keras.callbacks import TensorBoard
 
 DATA_PATH = os.path.join('MP_Data')  
 actions = os.listdir(DATA_PATH)
@@ -37,6 +36,13 @@ for action in actions:
 y = np.eye(len(np.unique(labels)))[np.array(labels).astype(int)]
 X = np.array(sequences)
 X_train, X_test, y_train, y_test = train_test_split(X, y, test_size = 0.05)
+# Save variables
+if os.path.exists("Data") == False:
+    os.mkdir("Data")   
+np.save(f'Data/X_train.npy', X_train)
+np.save(f'Data/X_test.npy', X_test)
+np.save(f'Data/y_train.npy', y_train)
+np.save(f'Data/y_test.npy', y_test)
 
 # --------------------------------- Create the neural network ----------------------------------------
 log_dir = os.path.join('Logs')
@@ -57,7 +63,10 @@ model.add(Dense(actions.shape[0], activation='softmax'))
 
 model.compile(optimizer='Adam', loss = 'categorical_crossentropy', metrics=['categorical_accuracy'])
 model.fit(X_train, y_train, epochs= 100, callbacks=[tb_callback])
-model.save('action.h5')
+model.save('Data/action.h5')
+
+y_predicted = model.predict(X_test)
+np.save('Data/y_predicted.npy', y_predicted)
                                                             
                                                             
                                                             
