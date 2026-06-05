@@ -1,4 +1,4 @@
-Hello everyone and welcome to my this side of the internet :)
+Hello everyone and welcome to my angle on the internet :)
 This repository is an improved version based on the tutorial by Nicholas Renotte (Sign Language Detection using ACTION RECOGNITION with Python | LSTM Deep Learning Model -
 https://www.youtube.com/watch?v=doDUihpj6ro&t=1016s). 
 
