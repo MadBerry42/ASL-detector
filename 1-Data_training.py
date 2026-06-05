@@ -3,7 +3,7 @@ import tensorflow as tf
 import numpy as np
 import os 
 from keras.models import Sequential       
-from keras.layers import LSTM, Dense                                               
+from keras.layers import LSTM, Dense, Input                                               
 from keras.callbacks import TensorBoard
 
 DATA_PATH = os.path.join('MP_Data')  
@@ -50,19 +50,16 @@ tb_callback = TensorBoard(log_dir=log_dir)
 n_keypoints = X.shape[2]
 
 model = Sequential()        
-model.add(LSTM(64, return_sequences=True, activation='relu', input_shape=(sequence_length, n_keypoints)))
-# Syntax: model.add(LSTM(number of LSTM units, 
-#                   return_sequences which is necessaty with tensorflow because it allows to stack sequences and the next layer will need 
-#                   activation type
-#                   input_shape(number of frames, number of keypoints)))
+model.add(Input(shape=(None, n_keypoints)))
+model.add(LSTM(64, return_sequences=True, activation='relu'))
 model.add(LSTM(128, return_sequences=True, activation='relu'))
 model.add(LSTM(64, return_sequences=False, activation='relu')) # In this case don't return the sequence because the next layer is dense
 model.add(Dense(64, activation='relu'))                        # 64 units of densely connected neural network neurons
 model.add(Dense(128, activation='relu'))
-model.add(Dense(actions.shape[0], activation='softmax'))       
+model.add(Dense(len(actions), activation='softmax'))       
 
 model.compile(optimizer='Adam', loss = 'categorical_crossentropy', metrics=['categorical_accuracy'])
-model.fit(X_train, y_train, epochs= 100, callbacks=[tb_callback])
+model.fit(X_train, y_train, epochs= 10)# , callbacks=[tb_callback])
 model.save('Data/action.h5')
 
 y_predicted = model.predict(X_test)
