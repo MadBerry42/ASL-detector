@@ -7,6 +7,8 @@ thus making the position estimation accuracy less dependant on the distance from
 I found that the program was also a bit too confident and sometimes produced multiple outputs for the same gesture, so I added a few lines to increase confidence before 
 providing an answer: the answer has to be consistent for a few seconds before it can be considered valid.
 
+I divided the codes into four parts: Data collection, Data training, Model performance evaluation, real time test. I also decided to add a better visualization for model performances and now the code returns a figure with the confusion matrix and the accuracy.
+
 In this repository you will find multiple .py files which are expected to be run in order. The ASL_notebook.ipynb file contains all the sequences from beginning to the end. However, I recommend to go by single files for readibility and to save time.
 
 Future developments for improving user experience will include plotting the evaluation results having a real table for the confusion matrix and a graph depicting accuracy over time.
