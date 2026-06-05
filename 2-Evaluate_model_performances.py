@@ -1,5 +1,7 @@
-from sklearn.metrics import multilabel_confusion_matrix, accuracy_score
+from sklearn.metrics import confusion_matrix, accuracy_score, ConfusionMatrixDisplay
 import numpy as np
+import matplotlib.pyplot as plt
+import os
 
 X_train = np.load('Data/X_test.npy')
 X_test = np.load('Data/X_test.npy')
@@ -10,9 +12,18 @@ y_predicted = np.load('Data/y_predicted.npy')
 ytrue = np.argmax(y_test, axis=1).tolist()
 yhat = np.argmax(y_predicted, axis= 1).tolist()
 
-cm = multilabel_confusion_matrix(ytrue, yhat)
+# Confusion matrix
+cm = confusion_matrix(ytrue, yhat)
+cm_display = ConfusionMatrixDisplay(confusion_matrix = cm, display_labels = os.listdir(os.path.join('MP_Data'))) 
+cm_display.plot()
 accuracy = accuracy_score(ytrue, yhat)
+plt.title(f"Accuracy: {accuracy}")
+plt.show()
 
-print(f"Confusion Matrix: {cm[0]}  {cm[1]} \n {cm[2]}  {cm[3]}")
+
 print(f"Accuracy: {accuracy}")
+
+
+
+
 
